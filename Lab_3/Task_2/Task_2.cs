@@ -25,9 +25,11 @@ class Task_2 // Оголошення класу Task_2
 
             string result = RemoveWords(input, start, count); // Виклик методу для видалення слів
             Console.WriteLine($"Результат: {result}"); // Вивід результату
+
+            break; // Додавання умови для виходу з циклу після виведення результату
         }
 
-        Console.ReadKey(); // Очікування натискання клавіші перед завершенням програми
+        // Console.ReadKey(); // Очікування натискання клавіші перед завершенням програми (закоментовано)
     }
 
     static string RemoveWords(string input, int start, int count) // Метод для видалення слів з рядка
