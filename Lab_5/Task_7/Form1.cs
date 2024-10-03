@@ -15,7 +15,10 @@ namespace Task_7 // Оголошення простору імен Task_7
         public Form1() // Конструктор класу Form1
         {
             InitializeComponent(); // Ініціалізація компонентів форми
+        }
 
+        private void Form1_Load(object sender, EventArgs e) // Обробник події завантаження форми
+        {
             // Створення TableLayoutPanel
             tableLayoutPanel = new TableLayoutPanel
             {
@@ -52,4 +55,3 @@ namespace Task_7 // Оголошення простору імен Task_7
         }
     }
 }
-
