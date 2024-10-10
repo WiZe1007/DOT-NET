@@ -1,4 +1,4 @@
-﻿namespace Task__9 // Оголошення простору імен Task__9
+﻿namespace Task9 // Оголошення простору імен Task__9
 {
     partial class Form1 // Часткове оголошення класу Form1
     {
@@ -46,7 +46,7 @@
             // toolStripButton1
             // 
             this.toolStripButton1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image; // Відображення кнопки як зображення
-            this.toolStripButton1.Image = System.Drawing.Image.FromFile(@"C:\Users\nemof\source\repos\Task__9\Task__9\Icon1.png"); // Завантаження зображення для кнопки 1
+            this.toolStripButton1.Image = System.Drawing.Image.FromFile(@"res\Icon1.png"); // Завантаження зображення для кнопки 1
             this.toolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta; // Встановлення прозорого кольору для зображення
             this.toolStripButton1.Name = "toolStripButton1"; // Встановлення імені кнопки 1
             this.toolStripButton1.Size = new System.Drawing.Size(23, 22); // Встановлення розміру кнопки 1
@@ -56,7 +56,7 @@
             // toolStripButton2
             // 
             this.toolStripButton2.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image; // Відображення кнопки як зображення
-            this.toolStripButton2.Image = System.Drawing.Image.FromFile(@"C:\Users\nemof\source\repos\Task__9\Task__9\Icon2.png"); // Завантаження зображення для кнопки 2
+            this.toolStripButton2.Image = System.Drawing.Image.FromFile(@"res\Icon2.png"); // Завантаження зображення для кнопки 2
             this.toolStripButton2.ImageTransparentColor = System.Drawing.Color.Magenta; // Встановлення прозорого кольору для зображення
             this.toolStripButton2.Name = "toolStripButton2"; // Встановлення імені кнопки 2
             this.toolStripButton2.Size = new System.Drawing.Size(23, 22); // Встановлення розміру кнопки 2
@@ -66,7 +66,7 @@
             // toolStripButton3
             // 
             this.toolStripButton3.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image; // Відображення кнопки як зображення
-            this.toolStripButton3.Image = System.Drawing.Image.FromFile(@"C:\Users\nemof\source\repos\Task__9\Task__9\Icon3.png"); // Завантаження зображення для кнопки 3
+            this.toolStripButton3.Image = System.Drawing.Image.FromFile(@"res\Icon3.png"); // Завантаження зображення для кнопки 3
             this.toolStripButton3.ImageTransparentColor = System.Drawing.Color.Magenta; // Встановлення прозорого кольору для зображення
             this.toolStripButton3.Name = "toolStripButton3"; // Встановлення імені кнопки 3
             this.toolStripButton3.Size = new System.Drawing.Size(23, 22); // Встановлення розміру кнопки 3
@@ -76,7 +76,7 @@
             // toolStripButton4
             // 
             this.toolStripButton4.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image; // Відображення кнопки як зображення
-            this.toolStripButton4.Image = System.Drawing.Image.FromFile(@"C:\Users\nemof\source\repos\Task__9\Task__9\Icon4.png"); // Завантаження зображення для кнопки 4
+            this.toolStripButton4.Image = System.Drawing.Image.FromFile(@"res\Icon4.png"); // Завантаження зображення для кнопки 4
             this.toolStripButton4.ImageTransparentColor = System.Drawing.Color.Magenta; // Встановлення прозорого кольору для зображення
             this.toolStripButton4.Name = "toolStripButton4"; // Встановлення імені кнопки 4
             this.toolStripButton4.Size = new System.Drawing.Size(23, 22); // Встановлення розміру кнопки 4

@@ -6,15 +6,15 @@
   "compilationOptions": {},
   "targets": {
     ".NETCoreApp,Version=v8.0": {
-      "Task__9/1.0.0": {
+      "Task9/1.0.0": {
         "runtime": {
-          "Task__9.dll": {}
+          "Task9.dll": {}
         }
       }
     }
   },
   "libraries": {
-    "Task__9/1.0.0": {
+    "Task9/1.0.0": {
       "type": "project",
       "serviceable": false,
       "sha512": ""

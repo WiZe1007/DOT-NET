@@ -1,80 +1,92 @@
-using System; // Підключення простору імен System для загальних функціональностей.
-using System.Windows.Forms; // Підключення простору імен для використання елементів графічного інтерфейсу Windows Forms.
+using System; // Підключаємо простір імен System, що містить основні функції .NET
+using System.Windows.Forms; // Підключаємо простір імен для роботи з Windows Forms
 
-namespace Task__8 // Оголошення простору імен Task__8.
+namespace Task__8 // Оголошуємо простір імен для проекту
 {
-    public partial class Form1 : Form // Оголошення класу Form1, що успадковується від класу Form (форма).
+    public partial class Form1 : Form // Оголошуємо клас Form1, який є частиною форми
     {
-        public Form1() // Конструктор класу Form1.
+        public Form1() // Конструктор класу Form1
         {
-            InitializeComponent(); // Ініціалізація компонентів форми.
+            InitializeComponent();  // Ініціалізуємо компоненти форми
 
             // Створюємо контекстне меню
             ContextMenuStrip contextMenu = new ContextMenuStrip();
 
-            // Елементи 1-го рівня
-            ToolStripMenuItem item1 = new ToolStripMenuItem("Item1"); // Створення пункту меню "Item1".
-            ToolStripMenuItem item2 = new ToolStripMenuItem("Item2"); // Створення пункту меню "Item2".
-            ToolStripMenuItem item3 = new ToolStripMenuItem("Item3"); // Створення пункту меню "Item3".
-            ToolStripMenuItem item4 = new ToolStripMenuItem("Item4"); // Створення пункту меню "Item4".
+            // Елементи 1-го рівня меню
+            ToolStripMenuItem item1 = new ToolStripMenuItem("Item1"); // Створюємо пункт меню Item1
+            ToolStripMenuItem item2 = new ToolStripMenuItem("Item2"); // Створюємо пункт меню Item2
+            ToolStripMenuItem item3 = new ToolStripMenuItem("Item3"); // Створюємо пункт меню Item3
+            ToolStripMenuItem item4 = new ToolStripMenuItem("Item4"); // Створюємо пункт меню Item4
 
             // Додаємо елементи першого рівня в контекстне меню
-            contextMenu.Items.Add(item1); // Додавання елемента "Item1" в контекстне меню.
-            contextMenu.Items.Add(item2); // Додавання елемента "Item2" в контекстне меню.
-            contextMenu.Items.Add(item3); // Додавання елемента "Item3" в контекстне меню.
-            contextMenu.Items.Add(item4); // Додавання елемента "Item4" в контекстне меню.
+            contextMenu.Items.Add(item1); // Додаємо Item1 до контекстного меню
+            contextMenu.Items.Add(item2); // Додаємо Item2 до контекстного меню
+            contextMenu.Items.Add(item3); // Додаємо Item3 до контекстного меню
+            contextMenu.Items.Add(item4); // Додаємо Item4 до контекстного меню
 
-            // Елементи 2-го рівня для Item2
-            ToolStripMenuItem item21 = new ToolStripMenuItem("Item21"); // Створення підпункту "Item21" для "Item2".
-            ToolStripMenuItem item22 = new ToolStripMenuItem("Item22"); // Створення підпункту "Item22" для "Item2".
-            ToolStripMenuItem item23 = new ToolStripMenuItem("Item23"); // Створення підпункту "Item23" для "Item2".
-            item2.DropDownItems.Add(item21); // Додавання "Item21" як підпункту до "Item2".
-            item2.DropDownItems.Add(item22); // Додавання "Item22" як підпункту до "Item2".
-            item2.DropDownItems.Add(item23); // Додавання "Item23" як підпункту до "Item2".
+            // Створюємо елементи 2-го рівня для Item2
+            ToolStripMenuItem item21 = new ToolStripMenuItem("Item21"); // Створюємо підменю Item21
+            ToolStripMenuItem item22 = new ToolStripMenuItem("Item22"); // Створюємо підменю Item22
+            ToolStripMenuItem item23 = new ToolStripMenuItem("Item23"); // Створюємо підменю Item23
+            item2.DropDownItems.Add(item21); // Додаємо елементи підменю до Item2
+            item2.DropDownItems.Add(item22);
+            item2.DropDownItems.Add(item23);
 
-            // Елементи 2-го рівня для Item3
-            ToolStripMenuItem item31 = new ToolStripMenuItem("Item31"); // Створення підпункту "Item31" для "Item3".
-            ToolStripMenuItem item32 = new ToolStripMenuItem("Item32"); // Створення підпункту "Item32" для "Item3".
-            ToolStripMenuItem item33 = new ToolStripMenuItem("Item33"); // Створення підпункту "Item33" для "Item3".
-            item3.DropDownItems.Add(item31); // Додавання "Item31" як підпункту до "Item3".
-            item3.DropDownItems.Add(item32); // Додавання "Item32" як підпункту до "Item3".
-            item3.DropDownItems.Add(item33); // Додавання "Item33" як підпункту до "Item3".
+            // Створюємо елементи 2-го рівня для Item3
+            ToolStripMenuItem item31 = new ToolStripMenuItem("Item31"); // Створюємо підменю Item31
+            ToolStripMenuItem item32 = new ToolStripMenuItem("Item32"); // Створюємо підменю Item32
+            ToolStripMenuItem item33 = new ToolStripMenuItem("Item33"); // Створюємо підменю Item33
+            item3.DropDownItems.Add(item31); // Додаємо елементи підменю до Item3
+            item3.DropDownItems.Add(item32);
+            item3.DropDownItems.Add(item33);
 
-            // Елементи 2-го рівня для Item4
-            ToolStripMenuItem item41 = new ToolStripMenuItem("Item41"); // Створення підпункту "Item41" для "Item4".
-            ToolStripMenuItem item42 = new ToolStripMenuItem("Item42"); // Створення підпункту "Item42" для "Item4".
-            ToolStripMenuItem item43 = new ToolStripMenuItem("Item43"); // Створення підпункту "Item43" для "Item4".
-            ToolStripMenuItem item44 = new ToolStripMenuItem("Item44"); // Створення підпункту "Item44" для "Item4".
-            ToolStripMenuItem item45 = new ToolStripMenuItem("Item45"); // Створення підпункту "Item45" для "Item4".
-            ToolStripMenuItem item46 = new ToolStripMenuItem("Item46"); // Створення підпункту "Item46" для "Item4".
-            item4.DropDownItems.Add(item41); // Додавання "Item41" як підпункту до "Item4".
-            item4.DropDownItems.Add(item42); // Додавання "Item42" як підпункту до "Item4".
-            item4.DropDownItems.Add(item43); // Додавання "Item43" як підпункту до "Item4".
-            item4.DropDownItems.Add(item44); // Додавання "Item44" як підпункту до "Item4".
-            item4.DropDownItems.Add(item45); // Додавання "Item45" як підпункту до "Item4".
-            item4.DropDownItems.Add(item46); // Додавання "Item46" як підпункту до "Item4".
+            // Створюємо елементи 2-го рівня для Item4
+            ToolStripMenuItem item41 = new ToolStripMenuItem("Item41"); // Створюємо підменю Item41
+            ToolStripMenuItem item42 = new ToolStripMenuItem("Item42"); // Створюємо підменю Item42
+            ToolStripMenuItem item43 = new ToolStripMenuItem("Item43"); // Створюємо підменю Item43
+            ToolStripMenuItem item44 = new ToolStripMenuItem("Item44"); // Створюємо підменю Item44
+            ToolStripMenuItem item45 = new ToolStripMenuItem("Item45"); // Створюємо підменю Item45
+            ToolStripMenuItem item46 = new ToolStripMenuItem("Item46"); // Створюємо підменю Item46
+            item4.DropDownItems.Add(item41); // Додаємо елементи підменю до Item4
+            item4.DropDownItems.Add(item42);
+            item4.DropDownItems.Add(item43);
+            item4.DropDownItems.Add(item44);
+            item4.DropDownItems.Add(item45);
+            item4.DropDownItems.Add(item46);
 
             // Прив'язуємо контекстне меню до міток
-            label1.ContextMenuStrip = contextMenu; // Прив'язуємо контекстне меню до label1.
-            label2.ContextMenuStrip = contextMenu; // Прив'язуємо контекстне меню до label2.
-            label3.ContextMenuStrip = contextMenu; // Прив'язуємо контекстне меню до label3.
+            label1.ContextMenuStrip = contextMenu; // Прив'язуємо контекстне меню до label1
+            label2.ContextMenuStrip = contextMenu; // Прив'язуємо контекстне меню до label2
+            label3.ContextMenuStrip = contextMenu; // Прив'язуємо контекстне меню до label3
 
             // Додаємо обробку подій для кожного пункту меню
-            item1.Click += (s, e) => MessageBox.Show("Item1 clicked"); // Додаємо обробник події для натискання на "Item1".
-            item21.Click += (s, e) => MessageBox.Show("Item21 clicked"); // Додаємо обробник події для натискання на "Item21".
-            item22.Click += (s, e) => MessageBox.Show("Item22 clicked"); // Додаємо обробник події для натискання на "Item22".
-            item23.Click += (s, e) => MessageBox.Show("Item23 clicked"); // Додаємо обробник події для натискання на "Item23".
+            AttachMenuEventHandlers(item1, "Item1"); 
+            AttachMenuEventHandlers(item21, "Item21"); 
+            AttachMenuEventHandlers(item22, "Item22"); 
+            AttachMenuEventHandlers(item23, "Item23");
+            AttachMenuEventHandlers(item31, "Item31"); 
+            AttachMenuEventHandlers(item32, "Item32"); 
+            AttachMenuEventHandlers(item33, "Item33"); 
+            AttachMenuEventHandlers(item41, "Item41"); 
+            AttachMenuEventHandlers(item42, "Item42"); 
+            AttachMenuEventHandlers(item43, "Item43"); 
+            AttachMenuEventHandlers(item44, "Item44"); 
+            AttachMenuEventHandlers(item45, "Item45"); 
+            AttachMenuEventHandlers(item46, "Item46"); 
+        }
 
-            item31.Click += (s, e) => MessageBox.Show("Item31 clicked"); // Додаємо обробник події для натискання на "Item31".
-            item32.Click += (s, e) => MessageBox.Show("Item32 clicked"); // Додаємо обробник події для натискання на "Item32".
-            item33.Click += (s, e) => MessageBox.Show("Item33 clicked"); // Додаємо обробник події для натискання на "Item33".
+        // Метод для прив'язки обробників подій до елементів меню
+        private void AttachMenuEventHandlers(ToolStripMenuItem menuItem, string itemName)
+        {
+            // Прив'язуємо обробник події Click, який викликає метод ShowMessage
+            menuItem.Click += (s, e) => ShowMessage(itemName); // Додаємо анонімний обробник події
+        }
 
-            item41.Click += (s, e) => MessageBox.Show("Item41 clicked"); // Додаємо обробник події для натискання на "Item41".
-            item42.Click += (s, e) => MessageBox.Show("Item42 clicked"); // Додаємо обробник події для натискання на "Item42".
-            item43.Click += (s, e) => MessageBox.Show("Item43 clicked"); // Додаємо обробник події для натискання на "Item43".
-            item44.Click += (s, e) => MessageBox.Show("Item44 clicked"); // Додаємо обробник події для натискання на "Item44".
-            item45.Click += (s, e) => MessageBox.Show("Item45 clicked"); // Додаємо обробник події для натискання на "Item45".
-            item46.Click += (s, e) => MessageBox.Show("Item46 clicked"); // Додаємо обробник події для натискання на "Item46".
+        // Метод для показу повідомлення при кліку на пункт меню
+        private void ShowMessage(string itemName)
+        {
+            // Відображаємо повідомлення про те, що пункт меню було натиснуто
+            MessageBox.Show($"{itemName} clicked"); // Виводимо вікно повідомлення
         }
     }
 }
