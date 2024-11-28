@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Data.SqlClient;
-using System.IO;
 using System.Windows.Forms;
 
 namespace Lab__12
@@ -15,58 +14,82 @@ namespace Lab__12
             this.senderUsername = senderUsername;
         }
 
-        // Відправка повідомлення
         private void SendButton_Click(object sender, EventArgs e)
         {
-            string recipient = toTextBox.Text.Trim();
+            string recipientUsername = toTextBox.Text.Trim();
             string theme = themeTextBox.Text.Trim();
             string text = messageTextBox.Text.Trim();
 
-            // Перевірка заповнення
-            if (string.IsNullOrEmpty(recipient) || string.IsNullOrEmpty(theme) || string.IsNullOrEmpty(text))
+            if (string.IsNullOrEmpty(recipientUsername) || string.IsNullOrEmpty(theme) || string.IsNullOrEmpty(text))
             {
                 MessageBox.Show("Заповніть всі поля.", "Помилка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
-            // Перевірка отримувача
-            if (!UserExists(recipient))
+            if (!UserExists(recipientUsername))
             {
                 MessageBox.Show("Отримувач не знайдений.", "Помилка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
-            using (SqlConnection conn = DataAccess.GetConnection())
+            int senderID = GetUserID(senderUsername);
+            int recipientID = GetUserID(recipientUsername);
+
+            if (senderID == -1 || recipientID == -1)
             {
+                MessageBox.Show("Помилка при отриманні даних користувача.", "Помилка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            string connectionString = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\nemof\OneDrive\Изображения\Lab__12\Lab__12\Lab__12\SocialNetwork.mdf;Integrated Security=True";
+            string query = "INSERT INTO Messages (SenderUserID, RecipientUserID, Theme, Text, Date) VALUES (@SenderUserID, @RecipientUserID, @Theme, @Text, @Date)";
+            using (SqlConnection conn = new SqlConnection(connectionString))
+            {
+                SqlCommand cmd = new SqlCommand(query, conn);
+                cmd.Parameters.AddWithValue("@SenderUserID", senderID);
+                cmd.Parameters.AddWithValue("@RecipientUserID", recipientID);
+                cmd.Parameters.AddWithValue("@Theme", theme);
+                cmd.Parameters.AddWithValue("@Text", text);
+                cmd.Parameters.AddWithValue("@Date", DateTime.Now);
                 conn.Open();
-                string query = "INSERT INTO Messages (SenderUsername, RecipientUsername, Theme, Text, Date) VALUES (@SenderUsername, @RecipientUsername, @Theme, @Text, @Date)";
-                using (SqlCommand cmd = new SqlCommand(query, conn))
-                {
-                    cmd.Parameters.AddWithValue("@SenderUsername", senderUsername);
-                    cmd.Parameters.AddWithValue("@RecipientUsername", recipient);
-                    cmd.Parameters.AddWithValue("@Theme", theme);
-                    cmd.Parameters.AddWithValue("@Text", text);
-                    cmd.Parameters.AddWithValue("@Date", DateTime.Now);
-                    cmd.ExecuteNonQuery();
-                }
+                cmd.ExecuteNonQuery();
             }
 
             MessageBox.Show("Повідомлення відправлено!", "Успіх", MessageBoxButtons.OK, MessageBoxIcon.Information);
             this.Close();
         }
 
-        // Перевірка існування користувача
         private bool UserExists(string username)
         {
-            using (SqlConnection conn = DataAccess.GetConnection())
+            string connectionString = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\nemof\OneDrive\Изображения\Lab__12\Lab__12\Lab__12\SocialNetwork.mdf;Integrated Security=True";
+            string query = "SELECT COUNT(*) FROM Users WHERE Username = @Username";
+            using (SqlConnection conn = new SqlConnection(connectionString))
             {
+                SqlCommand cmd = new SqlCommand(query, conn);
+                cmd.Parameters.AddWithValue("@Username", username);
                 conn.Open();
-                string query = "SELECT COUNT(*) FROM Users WHERE Username = @Username";
-                using (SqlCommand cmd = new SqlCommand(query, conn))
+                int count = (int)cmd.ExecuteScalar();
+                return count > 0;
+            }
+        }
+
+        private int GetUserID(string username)
+        {
+            string connectionString = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\nemof\OneDrive\Изображения\Lab__12\Lab__12\Lab__12\SocialNetwork.mdf;Integrated Security=True";
+            string query = "SELECT UserID FROM Users WHERE Username = @Username";
+            using (SqlConnection conn = new SqlConnection(connectionString))
+            {
+                SqlCommand cmd = new SqlCommand(query, conn);
+                cmd.Parameters.AddWithValue("@Username", username);
+                conn.Open();
+                object result = cmd.ExecuteScalar();
+                if (result != null)
                 {
-                    cmd.Parameters.AddWithValue("@Username", username);
-                    int count = (int)cmd.ExecuteScalar();
-                    return count > 0;
+                    return (int)result;
+                }
+                else
+                {
+                    return -1;
                 }
             }
         }

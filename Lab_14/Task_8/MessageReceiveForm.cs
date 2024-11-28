@@ -1,6 +1,6 @@
 ﻿using System;
+using System.Data;
 using System.Data.SqlClient;
-using System.IO;
 using System.Windows.Forms;
 
 namespace Lab__12
@@ -18,30 +18,32 @@ namespace Lab__12
 
         private void LoadMessages()
         {
-            using (SqlConnection conn = DataAccess.GetConnection())
+            int userID = GetUserID(username);
+            if (userID == -1)
             {
+                MessageBox.Show("Помилка при отриманні даних користувача.", "Помилка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            string connectionString = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\nemof\OneDrive\Изображения\Lab__12\Lab__12\Lab__12\SocialNetwork.mdf;Integrated Security=True";
+            string query = "SELECT MessageID, Theme FROM Messages WHERE RecipientUserID = @RecipientUserID";
+            using (SqlConnection conn = new SqlConnection(connectionString))
+            {
+                SqlCommand cmd = new SqlCommand(query, conn);
+                cmd.Parameters.AddWithValue("@RecipientUserID", userID);
                 conn.Open();
-                string query = "SELECT MessageID, SenderUsername, Theme, Text, Date FROM Messages WHERE RecipientUsername = @RecipientUsername";
-                using (SqlCommand cmd = new SqlCommand(query, conn))
+                SqlDataReader reader = cmd.ExecuteReader();
+                DataTable messagesTable = new DataTable();
+                messagesTable.Load(reader);
+                if (messagesTable.Rows.Count > 0)
                 {
-                    cmd.Parameters.AddWithValue("@RecipientUsername", username);
-                    using (SqlDataReader reader = cmd.ExecuteReader())
-                    {
-                        if (reader.HasRows)
-                        {
-                            messagesListBox.Items.Clear();
-                            while (reader.Read())
-                            {
-                                int messageId = reader.GetInt32(0);
-                                string theme = reader.GetString(2);
-                                messagesListBox.Items.Add(new MessageListItem { MessageID = messageId, Theme = theme });
-                            }
-                        }
-                        else
-                        {
-                            messagesListBox.Items.Add("No messages.");
-                        }
-                    }
+                    messagesListBox.DisplayMember = "Theme";
+                    messagesListBox.ValueMember = "MessageID";
+                    messagesListBox.DataSource = messagesTable;
+                }
+                else
+                {
+                    messagesListBox.Items.Add("No messages.");
                 }
             }
         }
@@ -50,46 +52,56 @@ namespace Lab__12
         {
             if (messagesListBox.SelectedItem != null && messagesListBox.SelectedItem.ToString() != "No messages.")
             {
-                MessageListItem selectedItem = messagesListBox.SelectedItem as MessageListItem;
-                if (selectedItem != null)
+                int messageID = Convert.ToInt32(messagesListBox.SelectedValue);
+                ShowMessageDetails(messageID);
+            }
+        }
+
+        private void ShowMessageDetails(int messageID)
+        {
+            string connectionString = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\nemof\OneDrive\Изображения\Lab__12\Lab__12\Lab__12\SocialNetwork.mdf;Integrated Security=True";
+            string query = @"SELECT m.Theme, m.Text, m.Date, u.Username AS SenderUsername 
+                             FROM Messages m 
+                             JOIN Users u ON m.SenderUserID = u.UserID 
+                             WHERE m.MessageID = @MessageID";
+            using (SqlConnection conn = new SqlConnection(connectionString))
+            {
+                SqlCommand cmd = new SqlCommand(query, conn);
+                cmd.Parameters.AddWithValue("@MessageID", messageID);
+                conn.Open();
+                SqlDataReader reader = cmd.ExecuteReader();
+                if (reader.Read())
                 {
-                    int messageId = selectedItem.MessageID;
-                    // Отримати деталі повідомлення з бази даних
-                    using (SqlConnection conn = DataAccess.GetConnection())
-                    {
-                        conn.Open();
-                        string query = "SELECT SenderUsername, Theme, Text, Date FROM Messages WHERE MessageID = @MessageID";
-                        using (SqlCommand cmd = new SqlCommand(query, conn))
-                        {
-                            cmd.Parameters.AddWithValue("@MessageID", messageId);
-                            using (SqlDataReader reader = cmd.ExecuteReader())
-                            {
-                                if (reader.Read())
-                                {
-                                    string messageDetails = $"From: {reader["SenderUsername"]}\n" +
-                                                            $"Theme: {reader["Theme"]}\n" +
-                                                            $"Text: {reader["Text"]}\n" +
-                                                            $"Date: {reader["Date"]}";
-                                    // Відкрити форму деталей повідомлення
-                                    MessageDetailForm detailForm = new MessageDetailForm(messageDetails);
-                                    detailForm.ShowDialog();
-                                }
-                            }
-                        }
-                    }
+                    string senderUsername = reader["SenderUsername"].ToString();
+                    string theme = reader["Theme"].ToString();
+                    string text = reader["Text"].ToString();
+                    DateTime date = Convert.ToDateTime(reader["Date"]);
+
+                    MessageDetailForm detailForm = new MessageDetailForm(senderUsername, theme, text, date);
+                    detailForm.ShowDialog();
                 }
             }
         }
-    }
 
-    class MessageListItem
-    {
-        public int MessageID { get; set; }
-        public string Theme { get; set; }
-
-        public override string ToString()
+        private int GetUserID(string username)
         {
-            return Theme;
+            string connectionString = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\nemof\OneDrive\Изображения\Lab__12\Lab__12\Lab__12\SocialNetwork.mdf;Integrated Security=True";
+            string query = "SELECT UserID FROM Users WHERE Username = @Username";
+            using (SqlConnection conn = new SqlConnection(connectionString))
+            {
+                SqlCommand cmd = new SqlCommand(query, conn);
+                cmd.Parameters.AddWithValue("@Username", username);
+                conn.Open();
+                object result = cmd.ExecuteScalar();
+                if (result != null)
+                {
+                    return (int)result;
+                }
+                else
+                {
+                    return -1;
+                }
+            }
         }
     }
 }

@@ -10,39 +10,33 @@ namespace Lab__12
     {
         private string username;
 
-        // Ініціалізація форми
         public ProfileForm(string username)
         {
             InitializeComponent();
             this.username = username;
-            LoadUserData(); // Завантаження даних
-            StyleComponents(); // Стилізація
+            LoadUserData();
+            StyleComponents();
         }
 
-        // Завантаження даних з файлу
         private void LoadUserData()
         {
-            using (SqlConnection conn = DataAccess.GetConnection())
+            string connectionString = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\nemof\OneDrive\Изображения\Lab__12\Lab__12\Lab__12\SocialNetwork.mdf;Integrated Security=True";
+            string query = "SELECT Email, Phone FROM Users WHERE Username = @Username";
+            using (SqlConnection conn = new SqlConnection(connectionString))
             {
+                SqlCommand cmd = new SqlCommand(query, conn);
+                cmd.Parameters.AddWithValue("@Username", username);
                 conn.Open();
-                string query = "SELECT Email, Phone FROM UserData WHERE Username = @Username";
-                using (SqlCommand cmd = new SqlCommand(query, conn))
+                SqlDataReader reader = cmd.ExecuteReader();
+                if (reader.Read())
                 {
-                    cmd.Parameters.AddWithValue("@Username", username);
-                    using (SqlDataReader reader = cmd.ExecuteReader())
-                    {
-                        if (reader.Read())
-                        {
-                            nameLabel.Text = username;
-                            emailLabel.Text = reader["Email"].ToString();
-                            phoneLabel.Text = reader["Phone"].ToString();
-                        }
-                    }
+                    nameLabel.Text = username;
+                    emailLabel.Text = reader["Email"].ToString();
+                    phoneLabel.Text = reader["Phone"].ToString();
                 }
             }
         }
 
-        // Налаштування стилю кнопок
         private void StyleComponents()
         {
             RoundButtonEdges(editNameButton, 15);
@@ -66,7 +60,6 @@ namespace Lab__12
             }
         }
 
-        // Закруглення країв кнопки
         private void RoundButtonEdges(Button button, int radius)
         {
             GraphicsPath path = new GraphicsPath();
@@ -78,14 +71,12 @@ namespace Lab__12
             button.Region = new Region(path);
         }
 
-        // Вихід з профілю
         private void LogoutButton_Click(object sender, EventArgs e)
         {
             new LoginForm().Show();
             this.Close();
         }
 
-        // Редагування імені
         private void EditNameButton_Click(object sender, EventArgs e)
         {
             EditNameForm editNameForm = new EditNameForm(username);
@@ -96,33 +87,28 @@ namespace Lab__12
             }
         }
 
-        // Редагування email
         private void EditEmailButton_Click(object sender, EventArgs e)
         {
             new EditEmailForm(username).ShowDialog();
             LoadUserData();
         }
 
-        // Редагування телефону
         private void EditPhoneButton_Click(object sender, EventArgs e)
         {
             new EditPhoneForm(username).ShowDialog();
             LoadUserData();
         }
 
-        // Редагування пароля
         private void EditPasswordButton_Click(object sender, EventArgs e)
         {
             new EditPasswordForm(username).ShowDialog();
         }
 
-        // Надсилання повідомлення
         private void SendMessageButton_Click(object sender, EventArgs e)
         {
             new MessageSendForm(username).ShowDialog();
         }
 
-        // Отримання повідомлення
         private void ReceiveMessageButton_Click(object sender, EventArgs e)
         {
             new MessageReceiveForm(username).ShowDialog();
