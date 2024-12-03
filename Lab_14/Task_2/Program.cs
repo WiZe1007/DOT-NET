@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using MySql.Data.MySqlClient;
 
-namespace CityTransportApp
+namespace Task_2
 {
     // Класи Transport, Route та RouteRegister
     public class Transport
